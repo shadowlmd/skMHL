@@ -1,0 +1,10 @@
+btw... ;-) у кого-то не компилялось, вот настpойки:
+
+{$IFDEF VIRTUALPASCAL}
+ {$AlignCode+,AlignData+,AlignRec-,Asm-,B-,D+,Delphi-,Frame+,G3+,I-,LocInfo+}
+ {$Optimise+,OrgName-,P+,Q-,R-,S-,SmartLink+,Speed+,T-,V-,W-,X+,Z-,ZD-}
+ {$M 256000}
+{$ELSE}
+ {$A-,B-,D+,E-,F+,G+,I-,L+,N-,P-,Q-,R-,S-,T-,V-,X+,Y+}
+ {$M 65520,0,655336}
+{$ENDIF}
