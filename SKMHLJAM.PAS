@@ -911,6 +911,7 @@ function TJamMessageBase.WriteMessage: Boolean;
      end else
     if Copy(S, 1, 6) = 'PID: ' then AddSubField(jamPID, Copy(S, 7, 255)) else
     if Copy(S, 1, 8) = 'FLAGS: ' then AddSubField(jamFLAGS, Copy(S, 9, 255)) else
+    if Copy(S, 1, 8) = 'TZUTC: ' then AddSubField(jamTZUTC, Copy(S, 9, 255)) else
     if Copy(S, 1, 5) = 'Via ' then AddSubField(jamVia, Copy(S, 6, 255)) else
     if Copy(S, 1, 9) = 'SEEN-BY: ' then AddSubField(jamSEENBY, Copy(S, 10, 255)) else
     if Copy(S, 1, 7) = 'PATH: ' then AddSubField(jamPATH, Copy(S, 8, 255)) else
