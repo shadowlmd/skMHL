@@ -23,6 +23,7 @@ const
  jamSEENBY              = $07D1;
  jamPATH                = $07D2;
  jamFLAGS               = $07D3;
+ jamTZUTC               = $07D4;
 
  jamaPrivate            = $00000004;
  jamaCrash              = $00000100;
@@ -577,6 +578,7 @@ function TJamMessageBase.OpenMessage: Boolean;
      jamPID: PutString('PID: ' + S);
      jamUnknown: PutString('' + S);
      jamFLAGS: PutString('FLAGS: ' + S);
+     jamTZUTC: PutString('TZUTC: ' + S);
     end;
     Inc(Count);
    end;
@@ -715,6 +717,7 @@ function TJamMessageBase.OpenMessageHeader: Boolean;
      jamPID: PutString('PID: ' + S);
      jamUnknown: PutString('' + S);
      jamFLAGS: PutString('FLAGS: ' + S);
+     jamTZUTC: PutString('TZUTC: ' + S);
     end;
 
     Inc(Count);
