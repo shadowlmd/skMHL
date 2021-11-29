@@ -8,8 +8,8 @@ type
   constructor Init(const AFileName: String; const AMode: Longint);
   destructor Done; virtual;
 
-  procedure Read(var Buf; Count: Word); virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: Longint); virtual;
+  procedure Write(var Buf; Count: Longint); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -34,10 +34,10 @@ type
   destructor Done; virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
-  procedure Read(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: Longint); virtual;
   procedure Seek(Pos: Longint); virtual;
   procedure Truncate; virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Write(var Buf; Count: Longint); virtual;
   procedure CopyFrom(var S: TMessageBaseStream; Count: Longint); virtual;
   procedure Flush; virtual;
  public

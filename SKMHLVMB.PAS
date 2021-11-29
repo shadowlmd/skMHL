@@ -42,8 +42,8 @@ type
 
   constructor Init(const AStream: PStream);
 
-  procedure Read(var Buf; Count: Word); virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: Longint); virtual;
+  procedure Write(var Buf; Count: Longint); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -104,14 +104,14 @@ constructor TVirtualStreamLinker.Init(const AStream: PStream);
   Stream:=AStream;
  end;
 
-procedure TVirtualStreamLinker.Read(var Buf; Count: Word);
+procedure TVirtualStreamLinker.Read(var Buf; Count: Longint);
  begin
   Stream^.Read(Buf, Count);
 
   Status:=Stream^.Status;
  end;
 
-procedure TVirtualStreamLinker.Write(var Buf; Count: Word);
+procedure TVirtualStreamLinker.Write(var Buf; Count: Longint);
  begin
   Stream^.Write(Buf, Count);
 

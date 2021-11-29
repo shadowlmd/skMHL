@@ -68,11 +68,11 @@ type
   procedure Flush; virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
-  procedure Read(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: Longint); virtual;
   procedure Reset; virtual;
   procedure Seek(Pos: Longint); virtual;
   procedure Truncate; virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Write(var Buf; Count: Longint); virtual;
   destructor Done; virtual;
  private
   Junk: Longint;
@@ -217,7 +217,7 @@ function TMessageBaseStreamThunk.GetSize: Longint;
   GetSize:=Junk;
  end;
 
-procedure TMessageBaseStreamThunk.Read(var Buf; Count: Word);
+procedure TMessageBaseStreamThunk.Read(var Buf; Count: Longint);
  begin
   Junk:=Count;
 
@@ -239,7 +239,7 @@ procedure TMessageBaseStreamThunk.Truncate;
   Status:=CallGateway(Gateway, Stream, gfnTruncate, nil, Junk);
  end;
 
-procedure TMessageBaseStreamThunk.Write(var Buf; Count: Word);
+procedure TMessageBaseStreamThunk.Write(var Buf; Count: Longint);
  begin
   Junk:=Count;
 

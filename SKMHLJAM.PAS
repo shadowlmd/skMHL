@@ -576,9 +576,11 @@ function TJamMessageBase.OpenMessage: Boolean;
      jamMSGID: PutString('MSGID: ' + S);
      jamREPLY: PutString('REPLY: ' + S);
      jamPID: PutString('PID: ' + S);
-     jamUnknown: PutString('' + S);
      jamFLAGS: PutString('FLAGS: ' + S);
      jamTZUTC: PutString('TZUTC: ' + S);
+     jamUnknown:
+      if (Copy(S, 1, 4) <> 'Via ') and (Copy(S, 1, 4) <> 'Recd') and (Copy(S, 1, 9) <> 'Forwarded') then
+       PutString('' + S);
     end;
     Inc(Count);
    end;
@@ -589,7 +591,10 @@ function TJamMessageBase.OpenMessage: Boolean;
   while GetSubField(Count, SubFieldType, S) do
    begin
     if SubFieldType = jamVia then
-     PutString('Via ' + S);
+     PutString('Via ' + S)
+    else
+    if (SubFieldType = jamUnknown) and ((Copy(S, 1, 4) = 'Via ') or (Copy(S, 1, 4) = 'Recd') or (Copy(S, 1, 9) = 'Forwarded')) then
+     PutString('' + S);
 
     Inc(Count);
    end;

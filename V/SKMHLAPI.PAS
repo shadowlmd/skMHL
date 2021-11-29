@@ -40,7 +40,7 @@ procedure skmhlapiSetFromAddress(const Base: Pointer; var Address: TAddress; con
 
 procedure skmhlapiSetToAddress(const Base: Pointer; var Address: TAddress);
 procedure skmhlapiSetFromAndToAddress(const Base: Pointer; var FromAddress, ToAddress: TAddress; const FreshMSGID: Boolean);
-procedure skmhlapiGetStringPChar(const Base: Pointer; Line: PChar; MaxLen: Integer);
+procedure skmhlapiGetStringPChar(const Base: Pointer; Line: PChar; MaxLen: Longint);
 procedure skmhlapiGetString(const Base: Pointer; var Line: String);
 procedure skmhlapiPutStringPChar(const Base: Pointer; Line: PChar);
 procedure skmhlapiPutString(const Base: Pointer; const Line: String);
@@ -49,8 +49,8 @@ procedure skmhlapiSetTextPos(const Base: Pointer; Position: Longint);
 function skmhlapiGetTextPos(const Base: Pointer): Longint;
 function skmhlapiGetTextSize(const Base: Pointer): Longint;
 procedure skmhlapiTruncateText(const Base: Pointer);
-procedure skmhlapiReadText(const Base: Pointer; var Buf; Count: Word);
-procedure skmhlapiWriteText(const Base: Pointer; var Buf; Count: Word);
+procedure skmhlapiReadText(const Base: Pointer; var Buf; Count: Longint);
+procedure skmhlapiWriteText(const Base: Pointer; var Buf; Count: Longint);
 function skmhlapiGetAttribute(const Base: Pointer; Attribute: Longint): Boolean;
 procedure skmhlapiSetAttribute(const Base: Pointer; Attribute: Longint; Enable: Boolean);
 procedure skmhlapiGetWrittenDateTime(const Base: Pointer; var DateTime: TMessageBaseDateTime);
@@ -63,7 +63,7 @@ procedure skmhlapiSetArrivedDateTime(const Base: Pointer; var DateTime: TMessage
 
 function skmhlapiWriteMessage(const Base: Pointer): Boolean;
 function skmhlapiWriteMessageHeader(const Base: Pointer): Boolean;
-function skmhlapiGetKludgePChar(const Base: Pointer; const Name, Destination: PChar; const MaxLen: Integer): Boolean;
+function skmhlapiGetKludgePChar(const Base: Pointer; const Name, Destination: PChar; const MaxLen: Longint): Boolean;
 
 function skmhlapiGetKludge(const Base: Pointer; const Name: String; var Destination: String): Boolean;
 

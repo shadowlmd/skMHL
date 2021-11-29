@@ -188,7 +188,7 @@ export;
   PMessageBase(Base)^.SetFromAndToAddress(FromAddress, ToAddress, FreshMSGID);
  end;
 
-procedure skmhlapiGetStringPChar(const Base: Pointer; Line: PChar; MaxLen: Integer); export;
+procedure skmhlapiGetStringPChar(const Base: Pointer; Line: PChar; MaxLen: Longint); export;
  begin
   PMessageBase(Base)^.GetStringPChar(Line, MaxLen);
  end;
@@ -233,12 +233,12 @@ procedure skmhlapiTruncateText(const Base: Pointer); export;
   PMessageBase(Base)^.TruncateText;
  end;
 
-procedure skmhlapiReadText(const Base: Pointer; var Buf; Count: Word); export;
+procedure skmhlapiReadText(const Base: Pointer; var Buf; Count: Longint); export;
  begin
   PMessageBase(Base)^.ReadText(Buf, Count);
  end;
 
-procedure skmhlapiWriteText(const Base: Pointer; var Buf; Count: Word); export;
+procedure skmhlapiWriteText(const Base: Pointer; var Buf; Count: Longint); export;
  begin
   PMessageBase(Base)^.WriteText(Buf, Count);
  end;
@@ -283,7 +283,7 @@ function skmhlapiWriteMessageHeader(const Base: Pointer): Boolean; export;
   skmhlapiWriteMessageHeader:=PMessageBase(Base)^.WriteMessageHeader;
  end;
 
-function skmhlapiGetKludgePChar(const Base: Pointer; const Name, Destination: PChar; const MaxLen: Integer): Boolean; export;
+function skmhlapiGetKludgePChar(const Base: Pointer; const Name, Destination: PChar; const MaxLen: Longint): Boolean; export;
  begin
   skmhlapiGetKludgePChar:=PMessageBase(Base)^.GetKludgePChar(Name, Destination, MaxLen);
  end;

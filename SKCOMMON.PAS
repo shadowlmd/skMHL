@@ -190,8 +190,8 @@ const
 
 { The following constants are defining the size of a temporary buffers which
   will be created while working. }
- MaxLineSize    : Longint = $4000;
- MaxMessageSize : Longint = $10000;
+ MaxLineSize    : Longint = $100000;
+ MaxMessageSize : Longint = $200000;
 
 { errors }
 
@@ -286,8 +286,8 @@ type
 
   procedure CopyFrom(var S: TMessageBaseStream; Count: Longint); virtual;
 
-  procedure Read(var Buf; Count: Word); virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: Longint); virtual;
+  procedure Write(var Buf; Count: Longint); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -363,9 +363,9 @@ function ExtractWord(N: Byte; const S: String; WordDelims: TCharSet): String;
 procedure ToASCIIZ(const Source: String; const Destination: Pointer);
 function FromASCIIZ(const Source: Pointer): String;
 procedure ConcatASCIIZ(const Destination, Source: Pointer);
-function LenASCIIZ(const Source: Pointer): Integer;
+function LenASCIIZ(const Source: Pointer): Longint;
 function PosASCIIZ(const SubString, Source: Pointer): Pointer;
-function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Word): Integer;
+function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Longint): Longint;
 
 function AddressToStr(const Address: TAddress): String;
 function AddressToStrPointless(const Address: TAddress): String;
@@ -501,12 +501,12 @@ procedure TMessageBaseStream.CopyFrom(var S: TMessageBaseStream; Count: Longint)
    end;
  end;
 
-procedure TMessageBaseStream.Read(var Buf; Count: Word);
+procedure TMessageBaseStream.Read(var Buf; Count: Longint);
  begin
   Abstract;
  end;
 
-procedure TMessageBaseStream.Write(var Buf; Count: Word);
+procedure TMessageBaseStream.Write(var Buf; Count: Longint);
  begin
   Abstract;
  end;
@@ -770,7 +770,7 @@ procedure ConcatASCIIZ(const Destination, Source: Pointer);
   StrCat(Destination, Source);
  end;
 
-function LenASCIIZ(const Source: Pointer): Integer;
+function LenASCIIZ(const Source: Pointer): Longint;
  begin
   LenASCIIZ:=StrLen(Source);
  end;
@@ -780,7 +780,7 @@ function PosASCIIZ(const SubString, Source: Pointer): Pointer;
   PosASCIIZ:=StrPos(Source, SubString);
  end;
 
-function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Word): Integer;
+function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Longint): Longint;
  begin
   CompLASCIIZ:=StrLComp(Str1, Str2, MaxLen);
  end;

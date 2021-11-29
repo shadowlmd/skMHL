@@ -249,7 +249,7 @@ type
   procedure SetFromAddress(var Address: TAddress; const FreshMSGID: Boolean); virtual;
   procedure SetToAddress(var Address: TAddress); virtual;
   procedure SetFromAndToAddress(var FromAddress, ToAddress: TAddress; const FreshMSGID: Boolean); virtual;
-  procedure GetStringPChar(Line: PChar; MaxLen: Word); virtual;
+  procedure GetStringPChar(Line: PChar; MaxLen: Longint); virtual;
   procedure GetString(var Line: String); virtual;
   procedure PutStringPChar(Line: PChar); virtual;
   procedure PutString(const Line: String); virtual;
@@ -258,8 +258,8 @@ type
   function GetTextPos: Longint; virtual;
   function GetTextSize: Longint; virtual;
   procedure TruncateText; virtual;
-  procedure ReadText(var Buf; Count: Word); virtual;
-  procedure WriteText(var Buf; Count: Word); virtual;
+  procedure ReadText(var Buf; Count: Longint); virtual;
+  procedure WriteText(var Buf; Count: Longint); virtual;
   function GetAttribute(Attribute: Longint): Boolean; virtual;
   procedure SetAttribute(Attribute: Longint; Enable: Boolean); virtual;
   procedure GetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
@@ -268,7 +268,7 @@ type
   procedure SetArrivedDateTime(var DateTime: TMessageBaseDateTime); virtual;
   function WriteMessage: Boolean; virtual;
   function WriteMessageHeader: Boolean; virtual;
-  function GetKludgePChar(const Name, Destination: PChar; const MaxLen: Word): Boolean; virtual;
+  function GetKludgePChar(const Name, Destination: PChar; const MaxLen: Longint): Boolean; virtual;
   function GetKludge(const Name: String; var Destination: String): Boolean; virtual;
   procedure SetKludgePChar(const Name, Value: PChar); virtual;
   procedure SetKludge(const Name, Value: String); virtual;
@@ -588,7 +588,7 @@ procedure TMessageBase.SetFromAndToAddress(var FromAddress, ToAddress: TAddress;
   SetToAddress(ToAddress);
  end;
 
-procedure TMessageBase.GetStringPChar(Line: PChar; MaxLen: Word);
+procedure TMessageBase.GetStringPChar(Line: PChar; MaxLen: Longint);
  const
   BufferSize = 256;
  var
@@ -721,12 +721,12 @@ procedure TMessageBase.TruncateText;
   MessageText^.Truncate;
  end;
 
-procedure TMessageBase.ReadText(var Buf; Count: Word);
+procedure TMessageBase.ReadText(var Buf; Count: Longint);
  begin
   MessageText^.Read(Buf, Count);
  end;
 
-procedure TMessageBase.WriteText(var Buf; Count: Word);
+procedure TMessageBase.WriteText(var Buf; Count: Longint);
  begin
   MessageText^.Write(Buf, Count);
  end;
@@ -771,9 +771,9 @@ function TMessageBase.WriteMessageHeader: Boolean;
   Abstract;
  end;
 
-function TMessageBase.GetKludgePChar(const Name, Destination: PChar; const MaxLen: Word): Boolean;
+function TMessageBase.GetKludgePChar(const Name, Destination: PChar; const MaxLen: Longint): Boolean;
  var
-  NameL: Integer;
+  NameL: Longint;
  begin
   NameL:=LenASCIIZ(Name);
 
