@@ -89,7 +89,7 @@ constructor TVirtualMessageBaseMHL.Init(const AStream: PMessageBaseStream);
 
 destructor TVirtualMessageBaseMHL.Done;
  begin
-  SetMessageTextStream(nil);
+  UnsetMessageTextStream;
 
   inherited Done;
  end;

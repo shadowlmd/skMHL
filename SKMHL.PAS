@@ -290,6 +290,7 @@ type
   procedure PutOrigin(Address: TAddress; const Text: String); virtual;
   function AfterLastKludge: Longint; virtual;
   procedure SetMessageTextStream(const AMessageText: PMessageBaseStream); virtual;
+  procedure UnsetMessageTextStream; virtual;
   procedure SetStatus(const AStatus: Longint); virtual;
   function GetStatus: Longint; virtual;
   procedure SetOpened(const AOpened: Boolean); virtual;
@@ -1103,6 +1104,11 @@ procedure TMessageBase.SetMessageTextStream(const AMessageText: PMessageBaseStre
    Dispose(MessageText, Done);
 
   MessageText:=AMessageText;
+ end;
+
+procedure TMessageBase.UnsetMessageTextStream;
+ begin
+  MessageText:=nil;
  end;
 
 procedure TMessageBase.SetStatus(const AStatus: Longint);
