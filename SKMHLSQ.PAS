@@ -264,9 +264,11 @@ function TSquishMessageBase.Create(const Path: String): Boolean;
      LastFree:=0;
 
      EndFrame:=SizeOf(SquishBaseHeader);
+{
      MaxMsg:=SquishMaxMsg;
      KeepDays:=SquishKeepDays;
-     SqHdrSize:=SizeOf(SquishMessageHeader);
+}
+     SqHdrSize:=SizeOf(TSquishFrame);
 
      FillChar(Rsvd2, SizeOf(Rsvd2), 0);
     end;
@@ -410,6 +412,7 @@ function TSquishMessageBase.OpenMessage: Boolean;
   CIBLength, K: Longint;
   Line: PChar;
   LineCh: Array[1..2] Of Char;
+  EmptyCIB: Boolean;
  begin
   CloseMessage;
 
@@ -457,6 +460,8 @@ function TSquishMessageBase.OpenMessage: Boolean;
 
   CIB^[CIBLength]:=#1;
 
+  EmptyCIB := True;
+
   ToASCIIZ('', Line);
 
   for K:=1 to CIBLength do
@@ -465,15 +470,21 @@ function TSquishMessageBase.OpenMessage: Boolean;
 
     if (LineCh[1] = #1) and (K <> 1) then
      begin
-      LineCh[1]:=#13;
+      if EmptyCIB and (K <> CIBLength) then
+       EmptyCIB := False;
 
-      GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+      if not EmptyCIB then
+       begin
+        LineCh[1]:=#13;
 
-      GetMessageTextStream^.Write(LineCh[1], 1);
+        GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-      LineCh[1]:=#1;
+        GetMessageTextStream^.Write(LineCh[1], 1);
 
-      ToASCIIZ('', Line);
+        LineCh[1]:=#1;
+
+        ToASCIIZ('', Line);
+       end;
      end;
 
     ConcatASCIIZ(Line, @LineCh);
@@ -502,6 +513,7 @@ function TSquishMessageBase.OpenMessageHeader: Boolean;
   CIBLength, K: Longint;
   Line: PChar;
   LineCh: Array[1..2] Of Char;
+  EmptyCIB: Boolean;
  begin
   CloseMessage;
 
@@ -549,6 +561,8 @@ function TSquishMessageBase.OpenMessageHeader: Boolean;
 
   CIB^[CIBLength]:=#1;
 
+  EmptyCIB := True;
+
   ToASCIIZ('', Line);
 
   for K:=1 to CIBLength do
@@ -557,15 +571,21 @@ function TSquishMessageBase.OpenMessageHeader: Boolean;
 
     if (LineCh[1] = #1) and (K <> 1) then
      begin
-      LineCh[1]:=#13;
+      if EmptyCIB and (K <> CIBLength) then
+       EmptyCIB := False;
 
-      GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+      if not EmptyCIB then
+       begin
+        LineCh[1]:=#13;
 
-      GetMessageTextStream^.Write(LineCh[1], 1);
+        GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-      LineCh[1]:=#1;
+        GetMessageTextStream^.Write(LineCh[1], 1);
 
-      ToASCIIZ('', Line);
+        LineCh[1]:=#1;
+
+        ToASCIIZ('', Line);
+       end;
      end;
 
     ConcatASCIIZ(Line, @LineCh);

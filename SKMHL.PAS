@@ -639,18 +639,12 @@ procedure TMessageBase.GetStringPChar(Line: PChar; MaxLen: Longint);
      begin
       Buffer[K]:=#0;
 
-      if Buffer[K + 1] = #10 then
-       begin
-        PutBuffer;
+      PutBuffer;
 
-        MessageText^.Seek(SavePos + K + 1);
-       end
+      if (K < Size) and (Buffer[K] = #13) and (Buffer[K + 1] = #10) then
+        MessageText^.Seek(SavePos + K + 1)
       else
-       begin
-        PutBuffer;
-
         MessageText^.Seek(SavePos + K);
-       end;
 
       Exit;
      end;
