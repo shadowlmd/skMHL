@@ -468,24 +468,30 @@ function TSquishMessageBase.OpenMessage: Boolean;
    begin
     LineCh[1]:=CIB^[K];
 
-    if (LineCh[1] = #1) and (K <> 1) then
-     begin
-      if EmptyCIB and (K <> CIBLength) then
-       EmptyCIB := False;
+    if LineCh[1] = #1 then
+     if EmptyCIB then
+      begin
+       if K <> CIBLength then
+        begin
+         ToASCIIZ('', Line);
+         EmptyCIB := False;
+        end;
+      end
+     else
+      begin
+       if LenASCIIZ(Line) > 1 then
+        begin
+         LineCh[1]:=#13;
 
-      if not EmptyCIB then
-       begin
-        LineCh[1]:=#13;
+         GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-        GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+         GetMessageTextStream^.Write(LineCh[1], 1);
 
-        GetMessageTextStream^.Write(LineCh[1], 1);
+         LineCh[1]:=#1;
+        end;
 
-        LineCh[1]:=#1;
-
-        ToASCIIZ('', Line);
-       end;
-     end;
+       ToASCIIZ('', Line);
+      end;
 
     ConcatASCIIZ(Line, @LineCh);
    end;
@@ -569,24 +575,30 @@ function TSquishMessageBase.OpenMessageHeader: Boolean;
    begin
     LineCh[1]:=CIB^[K];
 
-    if (LineCh[1] = #1) and (K <> 1) then
-     begin
-      if EmptyCIB and (K <> CIBLength) then
-       EmptyCIB := False;
+    if LineCh[1] = #1 then
+     if EmptyCIB then
+      begin
+       if K <> CIBLength then
+        begin
+         ToASCIIZ('', Line);
+         EmptyCIB := False;
+        end;
+      end
+     else
+      begin
+       if LenASCIIZ(Line) > 1 then
+        begin
+         LineCh[1]:=#13;
 
-      if not EmptyCIB then
-       begin
-        LineCh[1]:=#13;
+         GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-        GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+         GetMessageTextStream^.Write(LineCh[1], 1);
 
-        GetMessageTextStream^.Write(LineCh[1], 1);
+         LineCh[1]:=#1;
+        end;
 
-        LineCh[1]:=#1;
-
-        ToASCIIZ('', Line);
-       end;
-     end;
+       ToASCIIZ('', Line);
+      end;
 
     ConcatASCIIZ(Line, @LineCh);
    end;
