@@ -637,14 +637,14 @@ procedure TMessageBase.GetStringPChar(Line: PChar; MaxLen: Longint);
    for K:=1 to Size do
     if Buffer[K] in [#13, #10] then
      begin
-      Buffer[K]:=#0;
-
-      PutBuffer;
-
-      if (K < Size) and (Buffer[K] = #13) and (Buffer[K + 1] = #10) then
+      if (Buffer[K] = #13) and (Buffer[K + 1] = #10) and (SavePos + K < StreamSize) then
         MessageText^.Seek(SavePos + K + 1)
       else
         MessageText^.Seek(SavePos + K);
+
+      Buffer[K]:=#0;
+
+      PutBuffer;
 
       Exit;
      end;
