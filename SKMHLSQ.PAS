@@ -479,16 +479,13 @@ function TSquishMessageBase.OpenMessage: Boolean;
       end
      else
       begin
-       if LenASCIIZ(Line) > 1 then
-        begin
-         LineCh[1]:=#13;
+       LineCh[1]:=#13;
 
-         GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+       GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-         GetMessageTextStream^.Write(LineCh[1], 1);
+       GetMessageTextStream^.Write(LineCh[1], 1);
 
-         LineCh[1]:=#1;
-        end;
+       LineCh[1]:=#1;
 
        ToASCIIZ('', Line);
       end;
@@ -586,16 +583,13 @@ function TSquishMessageBase.OpenMessageHeader: Boolean;
       end
      else
       begin
-       if LenASCIIZ(Line) > 1 then
-        begin
-         LineCh[1]:=#13;
+       LineCh[1]:=#13;
 
-         GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
+       GetMessageTextStream^.Write(Line^, LenASCIIZ(Line));
 
-         GetMessageTextStream^.Write(LineCh[1], 1);
+       GetMessageTextStream^.Write(LineCh[1], 1);
 
-         LineCh[1]:=#1;
-        end;
+       LineCh[1]:=#1;
 
        ToASCIIZ('', Line);
       end;
