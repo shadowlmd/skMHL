@@ -190,8 +190,8 @@ const
 
 { The following constants are defining the size of a temporary buffers which
   will be created while working. }
- MaxLineSize    : Longint = $100000;
- MaxMessageSize : Longint = $200000;
+ MaxLineSize    : Longint = $4000;
+ MaxMessageSize : Longint = $10000;
 
 { errors }
 
