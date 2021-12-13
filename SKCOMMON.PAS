@@ -286,8 +286,8 @@ type
 
   procedure CopyFrom(var S: TMessageBaseStream; Count: Longint); virtual;
 
-  procedure Read(var Buf; Count: Longint); virtual;
-  procedure Write(var Buf; Count: Longint); virtual;
+  procedure Read(var Buf; Count: Word); virtual;
+  procedure Write(var Buf; Count: Word); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -501,12 +501,12 @@ procedure TMessageBaseStream.CopyFrom(var S: TMessageBaseStream; Count: Longint)
    end;
  end;
 
-procedure TMessageBaseStream.Read(var Buf; Count: Longint);
+procedure TMessageBaseStream.Read(var Buf; Count: Word);
  begin
   Abstract;
  end;
 
-procedure TMessageBaseStream.Write(var Buf; Count: Longint);
+procedure TMessageBaseStream.Write(var Buf; Count: Word);
  begin
   Abstract;
  end;

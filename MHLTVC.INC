@@ -31,14 +31,14 @@ destructor TMessageBaseFileStream.Done;
   inherited Done;
  end;
 
-procedure TMessageBaseFileStream.Read(var Buf; Count: Longint);
+procedure TMessageBaseFileStream.Read(var Buf; Count: Word);
  begin
   Link^.Read(Buf, Count);
 
   UpdateStatus;
  end;
 
-procedure TMessageBaseFileStream.Write(var Buf; Count: Longint);
+procedure TMessageBaseFileStream.Write(var Buf; Count: Word);
  begin
   Link^.Write(Buf, Count);
 
@@ -175,7 +175,7 @@ function TMessageBaseRamStream.GetSize: Longint;
   GetSize:=VirtualSize;
  end;
 
-procedure TMessageBaseRamStream.Read(var Buf; Count: Longint);
+procedure TMessageBaseRamStream.Read(var Buf; Count: Word);
  var
   Buffer: TMessageBaseRamBuffer absolute Buf;
   Block: PMessageBaseRamBlock;
@@ -213,7 +213,7 @@ procedure TMessageBaseRamStream.Truncate;
   SetSize(CurPos);
  end;
 
-procedure TMessageBaseRamStream.Write(var Buf; Count: Longint);
+procedure TMessageBaseRamStream.Write(var Buf; Count: Word);
  var
   Buffer: TMessageBaseRamBuffer absolute Buf;
   Block: PMessageBaseRamBlock;

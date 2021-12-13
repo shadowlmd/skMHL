@@ -258,8 +258,8 @@ type
   function GetTextPos: Longint; virtual;
   function GetTextSize: Longint; virtual;
   procedure TruncateText; virtual;
-  procedure ReadText(var Buf; Count: Longint); virtual;
-  procedure WriteText(var Buf; Count: Longint); virtual;
+  procedure ReadText(var Buf; Count: Word); virtual;
+  procedure WriteText(var Buf; Count: Word); virtual;
   function GetAttribute(Attribute: Longint): Boolean; virtual;
   procedure SetAttribute(Attribute: Longint; Enable: Boolean); virtual;
   procedure GetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
@@ -716,12 +716,12 @@ procedure TMessageBase.TruncateText;
   MessageText^.Truncate;
  end;
 
-procedure TMessageBase.ReadText(var Buf; Count: Longint);
+procedure TMessageBase.ReadText(var Buf; Count: Word);
  begin
   MessageText^.Read(Buf, Count);
  end;
 
-procedure TMessageBase.WriteText(var Buf; Count: Longint);
+procedure TMessageBase.WriteText(var Buf; Count: Word);
  begin
   MessageText^.Write(Buf, Count);
  end;
