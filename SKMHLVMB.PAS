@@ -54,8 +54,8 @@ type
  {$ENDIF}
 
 {$IFNDEF DELPHI}
-procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Longint);
-procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Longint);
+procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Word);
+procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Word);
 {$ENDIF}
 
 implementation
@@ -160,7 +160,7 @@ procedure TVirtualStreamLinker.Reset;
 { misc stuff }
 
 {$IFNDEF DELPHI}
-procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Longint);
+procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Word);
  var
   N: Word;
   Buffer: array[0..CopyFromBufferSize] of Byte;
@@ -179,7 +179,7 @@ procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TSt
    end;
  end;
 
-procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Longint);
+procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Word);
  var
   N: Word;
   Buffer: array[0..CopyFromBufferSize] of Byte;

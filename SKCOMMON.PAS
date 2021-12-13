@@ -363,9 +363,9 @@ function ExtractWord(N: Byte; const S: String; WordDelims: TCharSet): String;
 procedure ToASCIIZ(const Source: String; const Destination: Pointer);
 function FromASCIIZ(const Source: Pointer): String;
 procedure ConcatASCIIZ(const Destination, Source: Pointer);
-function LenASCIIZ(const Source: Pointer): Longint;
+function LenASCIIZ(const Source: Pointer): Word;
 function PosASCIIZ(const SubString, Source: Pointer): Pointer;
-function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Longint): Longint;
+function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Word): Integer;
 
 function AddressToStr(const Address: TAddress): String;
 function AddressToStrPointless(const Address: TAddress): String;
@@ -770,7 +770,7 @@ procedure ConcatASCIIZ(const Destination, Source: Pointer);
   StrCat(Destination, Source);
  end;
 
-function LenASCIIZ(const Source: Pointer): Longint;
+function LenASCIIZ(const Source: Pointer): Word;
  begin
   LenASCIIZ:=StrLen(Source);
  end;
@@ -780,7 +780,7 @@ function PosASCIIZ(const SubString, Source: Pointer): Pointer;
   PosASCIIZ:=StrPos(Source, SubString);
  end;
 
-function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Longint): Longint;
+function CompLASCIIZ(const Str1, Str2: Pointer; MaxLen: Word): Integer;
  begin
   CompLASCIIZ:=StrLComp(Str1, Str2, MaxLen);
  end;
