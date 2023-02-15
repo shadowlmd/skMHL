@@ -1287,7 +1287,7 @@ function DoubleToY2(const Year: Longint): Longint;
 procedure MSGDateTimeToMessageBaseDateTime(const A: Longint; var DT: TMessageBaseDateTime);
  var
   AX: System.Word;
-begin
+ begin
   AX:=A SHR 16;
   AX:=Lo(AX);
   AX:=AX AND $1F;
