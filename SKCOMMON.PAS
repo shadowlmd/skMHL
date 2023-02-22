@@ -447,7 +447,6 @@ const
  D1            = 146097;
  D2            = 1721119;
  SecsDelta     = 2145916800;
- DaysDelta     = 24837;
 
 {* Common stuff *}
 
@@ -1037,7 +1036,7 @@ procedure UnixDateTimeToMessageBaseDateTime(SecsPast: LongInt; var DateTime: TMe
   if SecsPast < 0 then
   begin
    Dec(SecsPast, SecsDelta);
-   Datenum:=(SecsPast div 86400) + c1970 + DaysDelta;
+   Datenum:=(SecsPast div 86400) + c1970 + (SecsDelta div 86400);
   end else
    Datenum:=(SecsPast div 86400) + c1970;
 
