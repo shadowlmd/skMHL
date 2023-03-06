@@ -48,12 +48,12 @@ LinkerName=LINK386.EXE
 
 [Directories]
 Conditionals=
-OutputDir=E:\VP2\out.%p\units
-ExeOutDir=e:\engine\dll
-IncludePath=E:\VP2\source\rtl;E:\VP2\source\tv;e:\engine\skmhl
-UnitPath=E:\VP2\units.%p;E:\VP2\source\rtl;E:\VP2\source\%p;E:\VP2\source\tv;e:\engine\skmhl;e:\engine\skmhl\v;e:\engine\tools
-LibPath=E:\VP2\lib.%p;E:\VP2\units.%p
-ResPath=E:\VP2\res.%p
+OutputDir=OUT
+ExeOutDir=OUT
+IncludePath=..;..\v;units\inc;units;d:\prog\pascal\vp\source\rtl;d:\prog\pascal\vp\source\tv;d:\prog\pascal\vp\source\opro
+UnitPath=..;..\v;units;d:\prog\pascal\vp\units.%p;d:\prog\pascal\vp\source\rtl;d:\prog\pascal\vp\source\%p;d:\prog\pascal\vp\source\opro;d:\prog\pascal\vp\source\tv
+LibPath=OUT;d:\prog\pascal\vp\lib.%p;d:\prog\pascal\vp\units.%p
+ResPath=d:\prog\pascal\vp\res.%p
 
 [Resource Compiler]
 CmdLine=

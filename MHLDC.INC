@@ -45,7 +45,7 @@ destructor TMessageBaseFileStream.Done;
   inherited Done;
  end;
 
-procedure TMessageBaseFileStream.Read(var Buf; Count: Word);
+procedure TMessageBaseFileStream.Read(var Buf; Count: xWord);
  begin
   if FileRead(Handle, Buf, Count) = -1 then
    Status:=GetLastError
@@ -53,7 +53,7 @@ procedure TMessageBaseFileStream.Read(var Buf; Count: Word);
    Status:=smOk;
  end;
 
-procedure TMessageBaseFileStream.Write(var Buf; Count: Word);
+procedure TMessageBaseFileStream.Write(var Buf; Count: xWord);
  begin
   if FileWrite(Handle, Buf, Count) = -1 then
    Status:=GetLastError
@@ -159,7 +159,7 @@ function TMessageBaseRamStream.GetSize: Longint;
   GetSize:=StreamSize;
  end;
 
-procedure TMessageBaseRamStream.Read(var Buf; Count: Word);
+procedure TMessageBaseRamStream.Read(var Buf; Count: xWord);
  begin
   if StreamPos + Count > StreamSize then
    begin
@@ -183,7 +183,7 @@ procedure TMessageBaseRamStream.Truncate;
   StreamSize:=StreamPos;
  end;
 
-procedure TMessageBaseRamStream.Write(var Buf; Count: Word);
+procedure TMessageBaseRamStream.Write(var Buf; Count: xWord);
  begin
   if StreamPos + Count > BufferSize then
    begin

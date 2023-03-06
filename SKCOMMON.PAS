@@ -164,6 +164,12 @@ type
   ReplyNext  : System.Word;
  end;
 
+ {$IFDEF VIRTUALPASCAL}
+ xWord = Longint;
+ {$ELSE}
+ xWord = Word;
+ {$ENDIF}
+
 const
 { The internal constants for work with attributes: }
  maPrivate      = $00000001;
@@ -286,8 +292,8 @@ type
 
   procedure CopyFrom(var S: TMessageBaseStream; Count: Longint); virtual;
 
-  procedure Read(var Buf; Count: Word); virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: xWord); virtual;
+  procedure Write(var Buf; Count: xWord); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -501,12 +507,12 @@ procedure TMessageBaseStream.CopyFrom(var S: TMessageBaseStream; Count: Longint)
    end;
  end;
 
-procedure TMessageBaseStream.Read(var Buf; Count: Word);
+procedure TMessageBaseStream.Read(var Buf; Count: xWord);
  begin
   Abstract;
  end;
 
-procedure TMessageBaseStream.Write(var Buf; Count: Word);
+procedure TMessageBaseStream.Write(var Buf; Count: xWord);
  begin
   Abstract;
  end;

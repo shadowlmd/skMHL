@@ -593,7 +593,8 @@ function TJamMessageBase.OpenMessage: Boolean;
     if SubFieldType = jamVia then
      PutString('Via ' + S)
     else
-    if (SubFieldType = jamUnknown) and ((Copy(S, 1, 4) = 'Via ') or (Copy(S, 1, 4) = 'Recd') or (Copy(S, 1, 9) = 'Forwarded')) then
+    if (SubFieldType = jamUnknown) and ((Copy(S, 1, 4) = 'Via ') or (Copy(S, 1, 4) = 'Recd') or
+       (Copy(S, 1, 9) = 'Forwarded')) then
      PutString('' + S);
 
     Inc(Count);

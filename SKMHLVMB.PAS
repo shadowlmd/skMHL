@@ -42,8 +42,8 @@ type
 
   constructor Init(const AStream: PStream);
 
-  procedure Read(var Buf; Count: Word); virtual;
-  procedure Write(var Buf; Count: Word); virtual;
+  procedure Read(var Buf; Count: xWord); virtual;
+  procedure Write(var Buf; Count: xWord); virtual;
   procedure Seek(Position: Longint); virtual;
   function GetPos: Longint; virtual;
   function GetSize: Longint; virtual;
@@ -54,8 +54,8 @@ type
  {$ENDIF}
 
 {$IFNDEF DELPHI}
-procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Word);
-procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Word);
+procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: xWord);
+procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: xWord);
 {$ENDIF}
 
 implementation
@@ -104,14 +104,14 @@ constructor TVirtualStreamLinker.Init(const AStream: PStream);
   Stream:=AStream;
  end;
 
-procedure TVirtualStreamLinker.Read(var Buf; Count: Word);
+procedure TVirtualStreamLinker.Read(var Buf; Count: xWord);
  begin
   Stream^.Read(Buf, Count);
 
   Status:=Stream^.Status;
  end;
 
-procedure TVirtualStreamLinker.Write(var Buf; Count: Word);
+procedure TVirtualStreamLinker.Write(var Buf; Count: xWord);
  begin
   Stream^.Write(Buf, Count);
 
@@ -160,7 +160,7 @@ procedure TVirtualStreamLinker.Reset;
 { misc stuff }
 
 {$IFNDEF DELPHI}
-procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: Word);
+procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TStream; Count: xWord);
  var
   N: Word;
   Buffer: array[0..CopyFromBufferSize] of Byte;
@@ -179,7 +179,7 @@ procedure CopyFromMHLStream(var Source: TMessageBaseStream; var Destination: TSt
    end;
  end;
 
-procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: Word);
+procedure CopyFromTVStream(var Source: TStream; var Destination: TMessageBaseStream; Count: xWord);
  var
   N: Word;
   Buffer: array[0..CopyFromBufferSize] of Byte;
