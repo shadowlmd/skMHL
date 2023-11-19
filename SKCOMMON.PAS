@@ -669,6 +669,7 @@ function StrToNumber(const S: String): Boolean;
 
 function StrToInteger(const S: String; var I: System.Integer): Boolean;
  var
+  V: System.Integer;
 {$IFDEF VIRTUALPASCAL}
   C: Longint;
 {$ELSE}
@@ -683,9 +684,16 @@ function StrToInteger(const S: String; var I: System.Integer): Boolean;
    end
   else
    begin
-    Val(S, I, C);
+    Val(S, V, C);
 
-    StrToInteger:=C = 0;
+    if C = 0 then
+     begin
+      I:=V;
+
+      StrToInteger:=True;
+     end
+    else
+     StrToInteger:=False;
    end;
  end;
 
