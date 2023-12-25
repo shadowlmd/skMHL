@@ -745,7 +745,7 @@ function TJamMessageBase.CloseMessage: Boolean;
 
 function TJamMessageBase.GetHighest: Longint;
  begin
-  GetHighest:=JamBaseHeader.BaseMsgNum + JamBaseHeader.ActiveMsgs;
+  GetHighest:=JamBaseHeader.BaseMsgNum + JamBaseHeader.ActiveMsgs - 1;
  end;
 
 function TJamMessageBase.GetCount: Longint;
@@ -1033,7 +1033,7 @@ function TJamMessageBase.CreateNewMessage: Boolean;
   JamMessageHeader.JamHeader.REPLYCrc:=$FFFFFFFF;
   JamMessageHeader.JamHeader.PwdCrc:=$FFFFFFFF;
 
-  JamMessageHeader.JamHeader.MsgNum:=Current - 1;
+  JamMessageHeader.JamHeader.MsgNum:=Current;
 
   GetCurrentMessageBaseDateTime(DateTime);
   SetWrittenDateTime(DateTime);
