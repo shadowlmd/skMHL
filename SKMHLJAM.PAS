@@ -1013,7 +1013,7 @@ function TJamMessageBase.CreateNewMessage: Boolean;
 
   Inc(JamBaseHeader.ActiveMsgs);
 
-  SetCurrent(JamBaseHeader.BaseMsgNum + GetCount);
+  SetCurrent(JamBaseHeader.BaseMsgNum + GetCount - 1);
 
   FillChar(JamMessageHeader, SizeOf(JamMessageHeader), 0);
   FillChar(JamInfo, SizeOf(JamInfo), 0);
