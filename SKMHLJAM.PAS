@@ -117,12 +117,12 @@ type
   function KillMessage: Boolean; virtual;
   function GetLastRead(const UserNumber: Longint): Longint; virtual;
   procedure SetLastRead(const UserNumber: Longint; const Value: Longint); virtual;
-  function GetReplyTo: LongInt;
-  function GetReplyFirst: LongInt;
-  function GetReplyNext: LongInt;
-  procedure SetReplyTo(const AReplyTo: LongInt);
-  procedure SetReplyFirst(const AReplyFirst: LongInt);
-  procedure SetReplyNext(const AReplyNext: LongInt);
+  function GetReplyTo: Longint;
+  function GetReplyFirst: Longint;
+  function GetReplyNext: Longint;
+  procedure SetReplyTo(const AReplyTo: Longint);
+  procedure SetReplyFirst(const AReplyFirst: Longint);
+  procedure SetReplyNext(const AReplyNext: Longint);
   procedure GetMessageHeader(var AHeader: TJamMessageHeaderFirst);
   procedure GetStreams(var AHeaderLink, AIndexLink, ADataLink: PMessageBaseStream);
   function GetRead: Boolean; virtual;
@@ -148,7 +148,6 @@ type
   function MapAttribute(var Attribute: Longint): Boolean;
   function StrCrc32(const S: String): Longint;
   procedure ResetAll;
-  procedure RepackIndex;
  end;
 
 implementation
@@ -266,9 +265,6 @@ function TJamMessageBase.Open(const Path: String): Boolean;
 
    HeaderLink^.Read(JamBaseHeader, SizeOf(JamBaseHeader));
 
-   if IndexLink^.GetSize div SizeOf(TJamIndex) <> JamBaseHeader.ActiveMsgs then
-    RepackIndex;
-
    Open:=True;
 
    SetOpened(True);
@@ -369,7 +365,7 @@ function TJamMessageBase.Create(const Path: String): Boolean;
 
    JamBaseHeader.ModCounter:=0;
    JamBaseHeader.ActiveMsgs:=0;
-   JamBaseHeader.PwdCRC:=-1;
+   JamBaseHeader.PwdCRC:=$FFFFFFFF;
    JamBaseHeader.BaseMsgNum:=1;
 
    HeaderLink^.Seek(0);
@@ -456,7 +452,7 @@ function TJamMessageBase.Exists(Message: Longint): Boolean;
  begin
   Exists:=False;
 
-  if (Message >= JamBaseHeader.BaseMsgNum) and (Message < JamBaseHeader.BaseMsgNum + JamBaseHeader.ActiveMsgs) then
+  if (Message >= JamBaseHeader.BaseMsgNum) and (Message <= GetHighest) then
    begin
     AJamIndexPosition:=(Message - JamBaseHeader.BaseMsgNum) * SizeOf(AJamIndex);
 
@@ -745,7 +741,7 @@ function TJamMessageBase.CloseMessage: Boolean;
 
 function TJamMessageBase.GetHighest: Longint;
  begin
-  GetHighest:=JamBaseHeader.BaseMsgNum + JamBaseHeader.ActiveMsgs - 1;
+  GetHighest:=IndexLink^.GetSize div SizeOf(TJamIndex) + JamBaseHeader.BaseMsgNum - 1;
  end;
 
 function TJamMessageBase.GetCount: Longint;
@@ -1013,7 +1009,7 @@ function TJamMessageBase.CreateNewMessage: Boolean;
 
   Inc(JamBaseHeader.ActiveMsgs);
 
-  SetCurrent(JamBaseHeader.BaseMsgNum + GetCount - 1);
+  SetCurrent(GetHighest + 1);
 
   FillChar(JamMessageHeader, SizeOf(JamMessageHeader), 0);
   FillChar(JamInfo, SizeOf(JamInfo), 0);
@@ -1058,8 +1054,6 @@ function TJamMessageBase.KillMessage: Boolean;
   IndexLink^.Write(JamIndex, SizeOf(JamIndex));
 
   Dec(JamBaseHeader.ActiveMsgs);
-
-  RepackIndex;
 
   SetCurrent(Current - 1);
 
@@ -1135,32 +1129,32 @@ procedure TJamMessageBase.SetLastRead(const UserNumber: Longint; const Value: Lo
   LastReadLink^.Write(LastRead, SizeOf(LastRead));
  end;
 
-function TJamMessageBase.GetReplyTo: LongInt;
+function TJamMessageBase.GetReplyTo: Longint;
  begin
   GetReplyTo:=JamMessageHeader.JamHeader.ReplyTo;
  end;
 
-function TJamMessageBase.GetReplyFirst: LongInt;
+function TJamMessageBase.GetReplyFirst: Longint;
  begin
   GetReplyFirst:=JamMessageHeader.JamHeader.ReplyFirst;
  end;
 
-function TJamMessageBase.GetReplyNext: LongInt;
+function TJamMessageBase.GetReplyNext: Longint;
  begin
   GetReplyNext:=JamMessageHeader.JamHeader.ReplyNext;
  end;
 
-procedure TJamMessageBase.SetReplyTo(const AReplyTo: LongInt);
+procedure TJamMessageBase.SetReplyTo(const AReplyTo: Longint);
  begin
   JamMessageHeader.JamHeader.ReplyTo:=AReplyTo;
  end;
 
-procedure TJamMessageBase.SetReplyFirst(const AReplyFirst: LongInt);
+procedure TJamMessageBase.SetReplyFirst(const AReplyFirst: Longint);
  begin
   JamMessageHeader.JamHeader.ReplyFirst:=AReplyFirst;
  end;
 
-procedure TJamMessageBase.SetReplyNext(const AReplyNext: LongInt);
+procedure TJamMessageBase.SetReplyNext(const AReplyNext: Longint);
  begin
   JamMessageHeader.JamHeader.ReplyNext:=AReplyNext;
  end;
@@ -1282,52 +1276,6 @@ procedure TJamMessageBase.ResetAll;
   DataLink^.Reset;
   HeaderLink^.Reset;
   LastReadLink^.Reset;
- end;
-
-procedure TJamMessageBase.RepackIndex;
- var
-  Index: TJamIndex;
-  TempStream: PMessageBaseStream;
-  TempSize: Longint;
- begin
-  IndexLink^.Seek(0);
-
-  TempStream:=CreateMessageBaseMemoryStream(IndexLink^.GetSize);
-  TempSize:=IndexLink^.GetSize;
-
-  JamBaseHeader.ActiveMsgs:=0;
-
-  TempStream^.Seek(TempSize);
-  TempStream^.Truncate;
-
-  TempStream^.Seek(0);
-
-  while TempSize > 0 do
-   begin
-    IndexLink^.Read(Index, SizeOf(Index));
-
-    if Index.HdrLoc <> -1 then
-     begin
-      TempStream^.Write(Index, SizeOf(Index));
-
-      Inc(JamBaseHeader.ActiveMsgs);
-     end;
-
-    Dec(TempSize, SizeOf(Index));
-   end;
-
-  TempStream^.Truncate;
-
-  IndexLink^.Seek(0);
-  TempStream^.Seek(0);
-
-  IndexLink^.CopyFrom(TempStream^, TempStream^.GetSize);
-
-  IndexLink^.Truncate;
-
-  IndexLink^.Flush;
-
-  Dispose(TempStream, Done);
  end;
 
 end.

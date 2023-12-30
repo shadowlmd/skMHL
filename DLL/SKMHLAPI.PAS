@@ -524,32 +524,32 @@ procedure skmhlapifidoGetHeader(const Base: Pointer; var AHeader: TFidoHeader); 
 
 { TJamMessageBase }
 
-function skmhlapijamGetReplyTo(const Base: Pointer): LongInt; export;
+function skmhlapijamGetReplyTo(const Base: Pointer): Longint; export;
  begin
   skmhlapijamGetReplyTo:=PJamMessageBase(Base)^.GetReplyTo;
  end;
 
-function skmhlapijamGetReplyFirst(const Base: Pointer): LongInt; export;
+function skmhlapijamGetReplyFirst(const Base: Pointer): Longint; export;
  begin
   skmhlapijamGetReplyFirst:=PJamMessageBase(Base)^.GetReplyFirst;
  end;
 
-function skmhlapijamGetReplyNext(const Base: Pointer): LongInt; export;
+function skmhlapijamGetReplyNext(const Base: Pointer): Longint; export;
  begin
   skmhlapijamGetReplyNext:=PJamMessageBase(Base)^.GetReplyNext;
  end;
 
-procedure skmhlapijamSetReplyTo(const Base: Pointer; const AReplyTo: LongInt); export;
+procedure skmhlapijamSetReplyTo(const Base: Pointer; const AReplyTo: Longint); export;
  begin
   PJamMessageBase(Base)^.SetReplyTo(AReplyTo);
  end;
 
-procedure skmhlapijamSetReplyFirst(const Base: Pointer; const AReplyFirst: LongInt); export;
+procedure skmhlapijamSetReplyFirst(const Base: Pointer; const AReplyFirst: Longint); export;
  begin
   PJamMessageBase(Base)^.SetReplyFirst(AReplyFirst);
  end;
 
-procedure skmhlapijamSetReplyNext(const Base: Pointer; const AReplyNext: LongInt); export;
+procedure skmhlapijamSetReplyNext(const Base: Pointer; const AReplyNext: Longint); export;
  begin
   PJamMessageBase(Base)^.SetReplyNext(AReplyNext);
  end;

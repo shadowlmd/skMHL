@@ -116,12 +116,12 @@ function skmhlapifidoGetReplyTo(const Base: Pointer): Longint;
 procedure skmhlapifidoSetReplyNext(const Base: Pointer; const ReplyNext: Longint);
 function skmhlapifidoGetReplyNext(const Base: Pointer): Longint;
 procedure skmhlapifidoGetHeader(const Base: Pointer; var AHeader: TFidoHeader);
-function skmhlapijamGetReplyTo(const Base: Pointer): LongInt;
-function skmhlapijamGetReplyFirst(const Base: Pointer): LongInt;
-function skmhlapijamGetReplyNext(const Base: Pointer): LongInt;
-procedure skmhlapijamSetReplyTo(const Base: Pointer; const AReplyTo: LongInt);
-procedure skmhlapijamSetReplyFirst(const Base: Pointer; const AReplyFirst: LongInt);
-procedure skmhlapijamSetReplyNext(const Base: Pointer; const AReplyNext: LongInt);
+function skmhlapijamGetReplyTo(const Base: Pointer): Longint;
+function skmhlapijamGetReplyFirst(const Base: Pointer): Longint;
+function skmhlapijamGetReplyNext(const Base: Pointer): Longint;
+procedure skmhlapijamSetReplyTo(const Base: Pointer; const AReplyTo: Longint);
+procedure skmhlapijamSetReplyFirst(const Base: Pointer; const AReplyFirst: Longint);
+procedure skmhlapijamSetReplyNext(const Base: Pointer; const AReplyNext: Longint);
 procedure skmhlapijamGetMessageHeader(const Base: Pointer; var AHeader: TJamMessageHeaderFirst);
 
 procedure skmhlapijamGetStreams(const Base: Pointer; var AHeaderLink, AIndexLink, ADataLink: PMessageBaseStream);

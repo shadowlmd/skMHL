@@ -1471,9 +1471,9 @@ function JustPathname(const PathName: String): String;
 
 
 {$IFDEF VIRTUALPASCAL}
-function TextSeek(var F: Text; const Target: LongInt): Boolean;
+function TextSeek(var F: Text; const Target: Longint): Boolean;
  var
-  P: LongInt;
+  P: Longint;
   T: TextRec absolute F;
  begin
   TextSeek:=True;
@@ -1495,7 +1495,7 @@ function TextSeek(var F: Text; const Target: LongInt): Boolean;
    end;
  end;
 
-function TextFileSize(var F: Text): LongInt;
+function TextFileSize(var F: Text): Longint;
  var
   T: TextRec absolute F;
   P: Longint;
@@ -1507,7 +1507,7 @@ function TextFileSize(var F: Text): LongInt;
   SysFileSeek(T.Handle, P, 0, P);
  end;
 
-function TextPos(var F: Text): LongInt;
+function TextPos(var F: Text): Longint;
  var
   T: TextRec absolute F;
  begin
@@ -1522,7 +1522,7 @@ function TextPos(var F: Text): LongInt;
 {$ENDIF}
 
 {$IFDEF DELPHI}
-function TextSeek(var F: Text; const Target: LongInt): Boolean;
+function TextSeek(var F: Text; const Target: Longint): Boolean;
  var
   T: TextRec absolute F;
   P: Longint;
@@ -1546,7 +1546,7 @@ function TextSeek(var F: Text; const Target: LongInt): Boolean;
    end;
  end;
 
-function TextFileSize(var F: Text): LongInt;
+function TextFileSize(var F: Text): Longint;
  var
   T: TextRec absolute F;
   P: Longint;
@@ -1558,7 +1558,7 @@ function TextFileSize(var F: Text): LongInt;
   FileSeek(T.Handle, P, 0);
  end;
 
-function TextPos(var F: Text): LongInt;
+function TextPos(var F: Text): Longint;
  var
   T: TextRec absolute F;
  begin
@@ -1576,10 +1576,10 @@ function TextPos(var F: Text): LongInt;
 { The following part of code has been cut from
   Turbo Professional 5.21 (c) by TurboPower Software, 1987, 1992. }
 
-function TextSeek(var F: Text; const Target: LongInt): Boolean;
+function TextSeek(var F: Text; const Target: Longint): Boolean;
  var
   T: Long absolute Target;
-  Pos: LongInt;
+  Pos: Longint;
   Regs: Registers;
  begin
   TextSeek:=False;
@@ -1627,7 +1627,7 @@ function TextSeek(var F: Text; const Target: LongInt): Boolean;
   TextSeek:=True;
  end;
 
-function TextFileSize(var F: Text) : LongInt;
+function TextFileSize(var F: Text) : Longint;
  var
   OldHi, OldLow: Integer;
   Regs: Registers;
@@ -1682,9 +1682,9 @@ function TextFileSize(var F: Text) : LongInt;
    end;
  end;
 
-function TextPos(var F: Text): LongInt;
+function TextPos(var F: Text): Longint;
  var
-  Position: LongInt;
+  Position: Longint;
   Regs: Registers;
  begin
   with Regs, TText(F) do
