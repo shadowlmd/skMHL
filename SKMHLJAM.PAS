@@ -114,6 +114,8 @@ type
   procedure SetFromAndToAddress(var FromAddress, ToAddress: TAddress; const FreshMSGID: Boolean); virtual;
   function GetAttribute(Attribute: Longint): Boolean; virtual;
   procedure SetAttribute(Attribute: Longint; Enable: Boolean); virtual;
+  function GetLocalAttribute(Attribute: Longint): Boolean; virtual;
+  procedure SetLocalAttribute(Attribute: Longint; Enable: Boolean); virtual;
   procedure GetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
   procedure GetArrivedDateTime(var DateTime: TMessageBaseDateTime); virtual;
   procedure SetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
@@ -848,7 +850,7 @@ function TJamMessageBase.GetAttribute(Attribute: Longint): Boolean;
     Exit;
    end;
 
-  GetAttribute:=JamMessageHeader.JamHeader.Attr1 and Attribute <> 0;
+  GetAttribute:=GetLocalAttribute(Attribute);
  end;
 
 procedure TJamMessageBase.SetAttribute(Attribute: Longint; Enable: Boolean);
@@ -856,6 +858,16 @@ procedure TJamMessageBase.SetAttribute(Attribute: Longint; Enable: Boolean);
   if not MapAttribute(Attribute) then
    Exit;
 
+  SetLocalAttribute(Attribute, Enable);
+ end;
+
+function TJamMessageBase.GetLocalAttribute(Attribute: Longint): Boolean;
+ begin
+  GetLocalAttribute:=JamMessageHeader.JamHeader.Attr1 and Attribute <> 0;
+ end;
+
+procedure TJamMessageBase.SetLocalAttribute(Attribute: Longint; Enable: Boolean);
+ begin
   if Enable then
    JamMessageHeader.JamHeader.Attr1:=JamMessageHeader.JamHeader.Attr1 or Attribute
   else
@@ -960,9 +972,9 @@ function TJamMessageBase.WriteMessage: Boolean;
   Buffer^.Seek(0);
 
   { update message }
-  SetAttribute(jamaTypeEcho, GetFlag(afEchomail));
-  SetAttribute(jamaTypeNet, GetFlag(afNetmail));
-  SetAttribute(jamaTypeLocal, GetFlag(afLocal));
+  SetLocalAttribute(jamaTypeEcho, GetFlag(afEchomail));
+  SetLocalAttribute(jamaTypeNet, GetFlag(afNetmail));
+  SetLocalAttribute(jamaTypeLocal, GetFlag(afLocal));
 
   { update index }
   JamMessageHeaderPosition:=HeaderLink^.GetSize;
@@ -1257,20 +1269,7 @@ function TJamMessageBase.MapAttribute(var Attribute: Longint): Boolean;
    maFRq: Attribute:=jamaFRq;
    maRRq: Attribute:=jamaRRq;
   else
-   MapAttribute:=(Attribute = jamaArchive) or
-                 (Attribute = jamaImmediate) or
-                 (Attribute = jamaDirect) or
-                 (Attribute = jamaGate) or
-                 (Attribute = jamaTfs) or
-                 (Attribute = jamaKfs) or
-                 (Attribute = jamaCfm ) or
-                 (Attribute = jamaFpu) or
-                 (Attribute = jamaTypeLocal) or
-                 (Attribute = jamaTypeEcho) or
-                 (Attribute = jamaTypeNet) or
-                 (Attribute = jamaNoDisp) or
-                 (Attribute = jamaLocked) or
-                 (Attribute = jamaKilled);
+   MapAttribute:=False;
   end;
  end;
 

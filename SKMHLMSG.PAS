@@ -43,6 +43,8 @@ type
   procedure SetFromAndToAddress(var FromAddress, ToAddress: TAddress; const FreshMSGID: Boolean); virtual;
   function GetAttribute(Attribute: Longint): Boolean; virtual;
   procedure SetAttribute(Attribute: Longint; Enable: Boolean); virtual;
+  function GetLocalAttribute(Attribute: Longint): Boolean; virtual;
+  procedure SetLocalAttribute(Attribute: Longint; Enable: Boolean); virtual;
   procedure GetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
   procedure GetArrivedDateTime(var DateTime: TMessageBaseDateTime); virtual;
   procedure SetWrittenDateTime(var DateTime: TMessageBaseDateTime); virtual;
@@ -463,16 +465,26 @@ function TFidoMessageBase.GetAttribute(Attribute: Longint): Boolean;
   if not MapAttribute(Attribute) then
    GetAttribute:=False
   else
-   GetAttribute:=Header.Attr and Attribute = Attribute;
+   GetAttribute:=GetLocalAttribute(Attribute);
  end;
 
 procedure TFidoMessageBase.SetAttribute(Attribute: Longint; Enable: Boolean);
  begin
   if MapAttribute(Attribute) then
-   if Enable then
-    Header.Attr:=Header.Attr or Attribute
-   else
-    Header.Attr:=Header.Attr and not Attribute;
+   SetLocalAttribute(Attribute, Enable);
+ end;
+
+function TFidoMessageBase.GetLocalAttribute(Attribute: Longint): Boolean;
+ begin
+  GetLocalAttribute:=Header.Attr and Attribute = Attribute;
+ end;
+
+procedure TFidoMessageBase.SetLocalAttribute(Attribute: Longint; Enable: Boolean);
+ begin
+  if Enable then
+   Header.Attr:=Header.Attr or Attribute
+  else
+   Header.Attr:=Header.Attr and not Attribute;
  end;
 
 { Warning!
