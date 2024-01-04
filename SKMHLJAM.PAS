@@ -25,24 +25,31 @@ const
  jamFLAGS               = $07D3;
  jamTZUTC               = $07D4;
 
+ jamaLocal              = $00000001;
+ jamaTransit            = $00000002;
  jamaPrivate            = $00000004;
- jamaCrash              = $00000100;
  jamaReceived           = $00000008;
  jamaSent               = $00000010;
- jamaAttach             = $00002000;
- jamaTransit            = $00000002;
- jamaOrphan             = $00040000;
  jamaKill               = $00000020;
- jamaLocal              = $00000001;
+ jamaArchive            = $00000040;
  jamaHold               = $00000080;
+ jamaCrash              = $00000100;
+ jamaImmediate          = $00000200;
+ jamaDirect             = $00000400;
+ jamaGate               = $00000800;
  jamaFRq                = $00001000;
+ jamaAttach             = $00002000;
+ jamaTfs                = $00004000;
+ jamaKfs                = $00008000;
  jamaRRq                = $00010000;
- jamaARq                = $00020000;
-
+ jamaCfm                = $00020000;
+ jamaOrphan             = $00040000;
+ jamaFpu                = $00400000;
  jamaTypeLocal          = $00800000;
  jamaTypeEcho           = $01000000;
  jamaTypeNet            = $02000000;
-
+ jamaNoDisp             = $20000000;
+ jamaLocked             = $40000000;
  jamaKilled             = $80000000;
 
  JamSubBufferSize       = $4000;
@@ -1249,11 +1256,21 @@ function TJamMessageBase.MapAttribute(var Attribute: Longint): Boolean;
    maHold: Attribute:=jamaHold;
    maFRq: Attribute:=jamaFRq;
    maRRq: Attribute:=jamaRRq;
-   maARq: Attribute:=jamaARq;
   else
-   MapAttribute:=(Attribute = jamaTypeLocal) or
+   MapAttribute:=(Attribute = jamaArchive) or
+                 (Attribute = jamaImmediate) or
+                 (Attribute = jamaDirect) or
+                 (Attribute = jamaGate) or
+                 (Attribute = jamaTfs) or
+                 (Attribute = jamaKfs) or
+                 (Attribute = jamaCfm ) or
+                 (Attribute = jamaFpu) or
+                 (Attribute = jamaTypeLocal) or
                  (Attribute = jamaTypeEcho) or
-                 (Attribute = jamaTypeNet);
+                 (Attribute = jamaTypeNet) or
+                 (Attribute = jamaNoDisp) or
+                 (Attribute = jamaLocked) or
+                 (Attribute = jamaKilled);
   end;
  end;
 
