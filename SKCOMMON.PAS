@@ -1156,13 +1156,24 @@ function GenerateMSGID: String;
  const
   OldMSGID: Longint = 0;
  var
-  DateTime: TMessageBaseDateTime;
+  DateTime: PMessageBaseDateTime;
   Stamp: Longint;
  begin
+  New(DateTime);
+
   repeat
-   GetCurrentMessageBaseDateTime(DateTime);
-   MessageBaseDateTimeToDosDateTime(DateTime, Stamp);
+   GetCurrentMessageBaseDateTime(DateTime^);
+   with DateTime^ do
+    Stamp:=Longint(Year mod 4) shl 30 +
+           Longint(Month) shl 26 +
+           Longint(Day) shl 21 +
+           Longint(Hour) shl 16 +
+           Min shl 10 +
+           Sec shl 4 +
+           (Sec100 div 7);
   until OldMSGID <> Stamp;
+
+  Dispose(DateTime);
 
   OldMSGID:=Stamp;
 
